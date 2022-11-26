@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import ScheduleModal from './schedule-modal.vue';
 
-import { ref } from 'vue-demi';
+import { ref } from 'vue';
 import { getStaticMapImage } from '../services/maps.service';
 import { useStore } from '../store';
 import { getTagName } from '../utils/get-tage-names';
@@ -33,24 +33,12 @@ const scheduleModalOpen = ref<boolean>(false);
       </li>
     </ul>
     <p>floor: {{ machineJoined.floor }}</p>
-    <button
-      @click="
-        () => {
-          scheduleModalOpen = true;
-        }
-      "
-    >
-      Schedule
-    </button>
+    <button @click="scheduleModalOpen = true">Schedule</button>
     <img :src="mapImage" />
     <div v-if="scheduleModalOpen">
       <ScheduleModal
         :schedule="machineJoined.tradePoint.workingTime"
-        @close="
-          () => {
-            scheduleModalOpen = false;
-          }
-        "
+        @close="scheduleModalOpen = false"
       />
     </div>
   </div>
