@@ -7,5 +7,7 @@ export const getMachines = () => api<IMachine[]>('/machines');
 export const getMachine = (machineId: id) =>
   api<IMachine>(`/machines/${machineId}`);
 
+export const getMachinesTypes = () => api<IMachineType[]>('/machineTypes');
+
 export const getMachineType = (machineTypeId: id) =>
   api<IMachineType>(`/machineTypes/${machineTypeId}`);

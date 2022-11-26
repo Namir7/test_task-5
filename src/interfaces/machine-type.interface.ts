@@ -1,4 +1,4 @@
-import type { Tags } from './tags.enum';
+import type { Tags } from '../enums/tags.enum';
 
 type tags = keyof typeof Tags;
 

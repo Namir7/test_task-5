@@ -1,22 +1,34 @@
 <script setup lang="ts">
 import MachineItem from './machine-item.vue';
 
-import { onMounted, ref } from 'vue';
-import type { IMachine } from '../interfaces/machine.interface';
-import { getMachines } from '../services/machines.service';
+import { useStore } from '@/store';
+import { computed, ref, watch } from 'vue-demi';
+import type { IMachine } from '@/interfaces/machine.interface';
 
-const machines = ref<IMachine[]>();
+const store = useStore();
 
-onMounted(async () => {
-  machines.value = await getMachines();
-});
+const filteredMachines = ref<IMachine[]>([]);
+
+const machines = computed(() => store.state.machines);
+
+watch(
+  () => store.state.search,
+  () => {
+    filteredMachines.value = store.getters.filteredMachines;
+  }
+);
 </script>
 
 <template>
   <div class="machines-list">
-    <ul>
+    <ul v-if="!store.state.search">
       <li :key="machine" v-for="machine in machines">
-        <MachineItem :machine="machine" />
+        <MachineItem :id="machine.id" />
+      </li>
+    </ul>
+    <ul v-else>
+      <li :key="machine" v-for="machine in filteredMachines">
+        <MachineItem :id="machine.id" />
       </li>
     </ul>
   </div>
